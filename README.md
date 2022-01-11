@@ -22,8 +22,11 @@ In your consuming project, run `pip install <path to wheel file>`.
 Here is sample code demonstrating how to download a page:
 
 ```python
-from tqdnld.__main__ import download
+from tqdnld.__main__ import Downloader
 
 url = "https://www.espn.com/"
-download(url, sleep_after_scroll_seconds=5, scroll_by=100)
+downloader = Downloader()
+downloader.download(url)
+downloader.driver.close()
+downloader.driver.quit()
 ```
