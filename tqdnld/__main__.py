@@ -39,7 +39,9 @@ def main(argv):
             print(HELP_TEXT)
             sys.exit(ERROR)
 
-        download(
+        downloader = Downloader()
+
+        downloader.download(
             url,
             sleep_after_scroll_seconds=sleep_after_scroll_seconds,
             scroll_by=scroll_by)
@@ -51,67 +53,72 @@ def main(argv):
         return ERROR_CTRL_C
 
 
-def download(
-        url: str,
-        on_after_download: Callable[[str], None] = None,
-        sleep_after_scroll_seconds: int = 2,
-        **kwargs):
-    """
-    Downloads a URL.
-    :param url: The URL to download.
-    :param on_after_download: An optional callback to execute after the download completes.
-    :param sleep_after_scroll_seconds: The time to sleep after each "scroll" event. Defaults to 2 seconds.
-    :param kwargs:
-        scroll_by: The number of pixels to scroll by. If omitted the value of 'document.body.scrollHeight' is used.
-    """
-    driver_path = os.path.join(os.getcwd(), "chromedriver.exe")
+class Downloader(object):
+    def __init__(self):
+        self.driver = None
 
-    if not os.path.exists(driver_path):
-        raise errors.ChromeDriverNotFoundException(driver_path)
+    def download(
+            self,
+            url: str,
+            on_after_download: Callable[[str], None] = None,
+            sleep_after_scroll_seconds: int = 2,
+            **kwargs):
+        """
+        Downloads a URL.
+        :param url: The URL to download.
+        :param on_after_download: An optional callback to execute after the download completes.
+        :param sleep_after_scroll_seconds: The time to sleep after each "scroll" event. Defaults to 2 seconds.
+        :param kwargs:
+            scroll_by: The number of pixels to scroll by. If omitted the value of 'document.body.scrollHeight' is used.
+        """
+        driver_path = os.path.join(os.getcwd(), "chromedriver.exe")
 
-    if sleep_after_scroll_seconds < 1:
-        raise ValueError("sleep_after_scroll_seconds value must be greater than zero.")
+        if not os.path.exists(driver_path):
+            raise errors.ChromeDriverNotFoundException(driver_path)
 
-    scroll_by = None
+        if sleep_after_scroll_seconds < 1:
+            raise ValueError("sleep_after_scroll_seconds value must be greater than zero.")
 
-    if kwargs.get("scroll_by") is not None:
-        scroll_by = int(kwargs.get("scroll_by"))
+        scroll_by = None
 
-        if scroll_by < 1:
-            raise ValueError("scroll_by value must be greater than zero.")
+        if kwargs.get("scroll_by") is not None:
+            scroll_by = int(kwargs.get("scroll_by"))
 
-    driver = webdriver.Chrome(
-        executable_path=os.path.join(os.getcwd(), "chromedriver.exe")
-    )
+            if scroll_by < 1:
+                raise ValueError("scroll_by value must be greater than zero.")
 
-    driver.maximize_window()
-    driver.get(url)
+        self.driver = webdriver.Chrome(
+            executable_path=os.path.join(os.getcwd(), "chromedriver.exe")
+        )
 
-    last_height = driver.execute_script("return document.body.scrollHeight")
+        self.driver.maximize_window()
+        self.driver.get(url)
 
-    if kwargs.get("scroll_by") is not None:
-        last_height = driver.execute_script("return window.pageYOffset")
+        last_height = self.driver.execute_script("return document.body.scrollHeight")
 
-    while True:
-        if scroll_by is not None:
-            driver.execute_script(f"window.scrollBy(0, {scroll_by})")
-        else:
-            driver.execute_script(f"window.scrollTo(0, document.body.scrollHeight);")
+        if kwargs.get("scroll_by") is not None:
+            last_height = self.driver.execute_script("return window.pageYOffset")
 
-        time.sleep(sleep_after_scroll_seconds)
+        while True:
+            if scroll_by is not None:
+                self.driver.execute_script(f"window.scrollBy(0, {scroll_by})")
+            else:
+                self.driver.execute_script(f"window.scrollTo(0, document.body.scrollHeight);")
 
-        if scroll_by is not None:
-            new_height = driver.execute_script("return window.pageYOffset")
-        else:
-            new_height = driver.execute_script("return document.body.scrollHeight")
+            time.sleep(sleep_after_scroll_seconds)
 
-        if new_height == last_height:
-            break
+            if scroll_by is not None:
+                new_height = self.driver.execute_script("return window.pageYOffset")
+            else:
+                new_height = self.driver.execute_script("return document.body.scrollHeight")
 
-        last_height = new_height
+            if new_height == last_height:
+                break
 
-    if on_after_download is not None:
-        on_after_download(driver.page_source)
+            last_height = new_height
+
+        if on_after_download is not None:
+            on_after_download(self.driver.page_source)
 
 
 if __name__ == "__main__":
