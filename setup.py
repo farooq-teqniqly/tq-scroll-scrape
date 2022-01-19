@@ -1,4 +1,4 @@
-import downloader
+import tqdnld
 from setuptools import setup, find_packages
 
 install_requires = [
@@ -14,21 +14,16 @@ def long_description():
 
 
 setup(
-    name="downloader",
-    version=downloader.__version__,
-    description=downloader.__doc__.strip(),
+    name="tqdnld",
+    version=tqdnld.__version__,
+    description=tqdnld.__doc__.strip(),
     long_description=long_description(),
     long_description_content_type="text/markdown",
     url="https://github.com/farooq-teqniqly/tqdnld",
-    author=downloader.__author__,
+    author=tqdnld.__author__,
     author_email="farooq@teqniqly.com",
-    license=downloader.__license__,
-    packages=find_packages(include=["downloader", "downloader.*"]),
-    entry_points={
-        "console_scripts": [
-            "downloader = downloader.__main__:main"
-        ],
-    },
+    license=tqdnld.__license__,
+    packages=find_packages(include=["tqdnld", "tqdnld.*"]),
     python_requires=">=3.8",
     install_requires=install_requires,
     classifiers=[

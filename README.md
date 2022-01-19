@@ -22,7 +22,7 @@ In your consuming project, run `pip install <path to wheel file>`.
 Here is sample code demonstrating how to download a page:
 
 ```python
-from downloader.downloader import Downloader
+from tqdnld.downloader import Downloader
 
 url = "https://www.espn.com/"
 downloader = Downloader()
@@ -40,7 +40,7 @@ be controlled via the `sleep_after_scroll_seconds` parameter. If omitted, the de
 The example below scrolls the page by 500 pixels, waiting 5 seconds between each scroll.
 
 ```python
-from downloader.downloader import Downloader
+from tqdnld.downloader import Downloader
 
 url = "https://www.espn.com/"
 downloader = Downloader()
@@ -54,7 +54,7 @@ The `download` function accepts a callback that executes after the page is downl
 source is passed into the callback. The example below saves the downloaded page to an html file.
 
 ```python
-from downloader.downloader import Downloader
+from tqdnld.downloader import Downloader
 
 
 def save_file(source: str):
@@ -65,6 +65,19 @@ def save_file(source: str):
 url = "https://www.espn.com/"
 downloader = Downloader()
 downloader.download(url, save_file)
+downloader.driver.close()
+downloader.driver.quit()
+```
+
+#### Running in headless mode
+Pass the `headless` kwarg to run the browser in headless mode:
+
+```python
+from tqdnld.downloader import Downloader
+
+url = "https://www.espn.com/"
+downloader = Downloader()
+downloader.download(url, headless=True)
 downloader.driver.close()
 downloader.driver.quit()
 ```
