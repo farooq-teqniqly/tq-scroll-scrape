@@ -8,6 +8,7 @@ import errors
 from selenium import webdriver
 
 
+# pylint: disable=too-few-public-methods
 class ScrollAndScrape:
     """
     The ScrollAndScrape class manages the scrolling and downloading of pages.
