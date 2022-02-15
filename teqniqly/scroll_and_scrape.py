@@ -1,3 +1,6 @@
+"""
+Scroll and Scrape module.
+"""
 import os
 import time
 from typing import Callable
@@ -5,7 +8,12 @@ import errors
 from selenium import webdriver
 
 
-class Downloader(object):
+# pylint: disable=too-few-public-methods
+class ScrollAndScrape:
+    """
+    The ScrollAndScrape class manages the scrolling and downloading of pages.
+    """
+
     def __init__(self):
         self._driver_path = os.path.join(os.getcwd(), "chromedriver.exe")
 
@@ -15,12 +23,20 @@ class Downloader(object):
         self.driver = None
 
     def download(
-        self,
-        url: str,
-        on_after_download: Callable[[str], None] = None,
-        sleep_after_scroll_seconds: int = 2,
-        **kwargs,
+            self,
+            url: str,
+            on_after_download: Callable[[str], None] = None,
+            sleep_after_scroll_seconds: int = 2,
+            **kwargs,
     ):
+        """
+        Downloads a page.
+        Args:
+            url: The page's URL.
+            on_after_download: An optional callback to execute after the page downloads.
+            sleep_after_scroll_seconds: The time in seconds to sleep after each scroll event.
+            **kwargs: Additional keyword arguments to the function.
+        """
         if sleep_after_scroll_seconds < 1:
             raise ValueError(
                 "sleep_after_scroll_seconds value must be greater than zero."

@@ -1,6 +1,7 @@
-# tqdnld
+# Scroll-Scraper
 
-Python library for downloading web pages via Selenium.
+Python library for automating scrolling and downloading web pages via Selenium. 
+This is especially useful for pages that utilize infinite scrolling.
 
 ## Usage
 
@@ -22,13 +23,13 @@ In your consuming project, run `pip install <path to wheel file>`.
 Here is sample code demonstrating how to download a page:
 
 ```python
-from downloader.downloader import Downloader
+from teqniqly.scroll_and_scrape import ScrollAndScrape
 
 url = "https://www.espn.com/"
-downloader = Downloader()
-downloader.download(url)
-downloader.driver.close()
-downloader.driver.quit()
+scroll_scraper = ScrollAndScrape()
+scroll_scraper.download(url)
+scroll_scraper.driver.close()
+scroll_scraper.driver.quit()
 ```
 
 This library will scroll the page until it reaches the end. The scroll height can be controlled
@@ -40,10 +41,10 @@ be controlled via the `sleep_after_scroll_seconds` parameter. If omitted, the de
 The example below scrolls the page by 500 pixels, waiting 5 seconds between each scroll.
 
 ```python
-from downloader.downloader import Downloader
+from teqniqly.scroll_and_scrape import ScrollAndScrape
 
 url = "https://www.espn.com/"
-downloader = Downloader()
+downloader = ScrollAndScrape()
 downloader.download(url, sleep_after_scroll_seconds=5, scroll_by=500)
 downloader.driver.close()
 downloader.driver.quit()
@@ -54,7 +55,7 @@ The `download` function accepts a callback that executes after the page is downl
 source is passed into the callback. The example below saves the downloaded page to an html file.
 
 ```python
-from downloader.downloader import Downloader
+from teqniqly.scroll_and_scrape import ScrollAndScrape
 
 
 def save_file(source: str):
@@ -63,7 +64,7 @@ def save_file(source: str):
 
 
 url = "https://www.espn.com/"
-downloader = Downloader()
+downloader = ScrollAndScrape()
 downloader.download(url, save_file)
 downloader.driver.close()
 downloader.driver.quit()
