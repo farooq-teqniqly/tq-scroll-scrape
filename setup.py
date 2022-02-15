@@ -1,38 +1,34 @@
-import downloader
+"""
+Setup module.
+"""
 from setuptools import setup, find_packages
-
-install_requires = [
-    "setuptools",
-    "wheel",
-    "selenium"
-]
+import teqniqly
 
 
 def long_description():
-    with open("README.md", encoding="utf-8") as f:
-        return f.read()
+    """
+    Returns the text of the readme.
+    :return: The text of the readme.
+    """
+    with open("README.md", encoding="utf-8") as file:
+        return file.read()
 
 
 setup(
-    name="downloader",
-    version=downloader.__version__,
-    description=downloader.__doc__.strip(),
+    name="tq-scroll-scrape",
+    version=teqniqly.__version__,
+    description=teqniqly.__doc__.strip(),
     long_description=long_description(),
     long_description_content_type="text/markdown",
     url="https://github.com/farooq-teqniqly/tqdnld",
-    author=downloader.__author__,
+    author=teqniqly.__author__,
     author_email="farooq@teqniqly.com",
-    license=downloader.__license__,
-    packages=find_packages(include=["downloader", "downloader.*"]),
-    entry_points={
-        "console_scripts": [
-            "downloader = downloader.__main__:main"
-        ],
-    },
-    python_requires=">=3.8",
-    install_requires=install_requires,
+    license=teqniqly.__license__,
+    packages=find_packages(include=["teqniqly", "teqniqly.*"]),
+    python_requires=">=3.9",
+    install_requires=["selenium"],
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3 :: Only",
         "Intended Audience :: Developers",
