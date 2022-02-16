@@ -10,15 +10,11 @@ This is especially useful for pages that utilize infinite scrolling.
 Download ChromeDriver from https://chromedriver.chromium.org/downloads. Choose the version that matches the Chrome
 browser running on your system. Place the executable in the root of your Python project.
 
-### Build tqdnld Wheel
+### Install Package
 
-Fork or clone this repository and run `python setup.py bdist_wheel` in the repository root.
+Install the package by running `pip install tq-scroll-scrape`.
 
-### Install tqdnld Wheel
-
-In your consuming project, run `pip install <path to wheel file>`.
-
-### Use the Module
+### Use the Package
 
 Here is sample code demonstrating how to download a page:
 
