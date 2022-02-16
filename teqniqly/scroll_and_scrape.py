@@ -4,8 +4,8 @@ Scroll and Scrape module.
 import os
 import time
 from typing import Callable
-import errors
 from selenium import webdriver
+from teqniqly import errors
 
 
 # pylint: disable=too-few-public-methods
