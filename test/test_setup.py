@@ -1,7 +1,7 @@
 """
 This file only tests the import statements work.
 """
-from teqniqly.scroll_and_scrape import ScrollAndScrape
+from tq_scroll_scrape.scroll_and_scrape import ScrollAndScrape
 
 
 def test_foo():

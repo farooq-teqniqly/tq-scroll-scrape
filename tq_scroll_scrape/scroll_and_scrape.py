@@ -5,7 +5,7 @@ import os
 import time
 from typing import Callable
 from selenium import webdriver
-from teqniqly import errors
+from tq_scroll_scrape import errors
 
 
 # pylint: disable=too-few-public-methods

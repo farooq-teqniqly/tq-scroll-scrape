@@ -19,7 +19,7 @@ Install the package by running `pip install tq-scroll-scrape`.
 Here is sample code demonstrating how to download a page:
 
 ```python
-from teqniqly.scroll_and_scrape import ScrollAndScrape
+from tq_scroll_scrape.scroll_and_scrape import ScrollAndScrape
 
 url = "https://www.espn.com/"
 scroll_scraper = ScrollAndScrape()
@@ -37,7 +37,7 @@ be controlled via the `sleep_after_scroll_seconds` parameter. If omitted, the de
 The example below scrolls the page by 500 pixels, waiting 5 seconds between each scroll.
 
 ```python
-from teqniqly.scroll_and_scrape import ScrollAndScrape
+from tq_scroll_scrape.scroll_and_scrape import ScrollAndScrape
 
 url = "https://www.espn.com/"
 downloader = ScrollAndScrape()
@@ -51,7 +51,7 @@ The `download` function accepts a callback that executes after the page is downl
 source is passed into the callback. The example below saves the downloaded page to an html file.
 
 ```python
-from teqniqly.scroll_and_scrape import ScrollAndScrape
+from tq_scroll_scrape.scroll_and_scrape import ScrollAndScrape
 
 
 def save_file(source: str):
