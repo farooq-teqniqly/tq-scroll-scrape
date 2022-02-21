@@ -2,7 +2,7 @@
 Setup module.
 """
 from setuptools import setup, find_packages
-import teqniqly
+import tq_scroll_scrape
 
 
 def long_description():
@@ -16,15 +16,15 @@ def long_description():
 
 setup(
     name="tq-scroll-scrape",
-    version=teqniqly.__version__,
-    description=teqniqly.__doc__.strip(),
+    version=tq_scroll_scrape.__version__,
+    description=tq_scroll_scrape.__doc__.strip(),
     long_description=long_description(),
     long_description_content_type="text/markdown",
-    url="https://github.com/farooq-teqniqly/tqdnld",
-    author=teqniqly.__author__,
+    url="https://github.com/farooq-teqniqly/tq-scroll-scrape",
+    author=tq_scroll_scrape.__author__,
     author_email="farooq@teqniqly.com",
-    license=teqniqly.__license__,
-    packages=find_packages(include=["teqniqly", "teqniqly.*"]),
+    license=tq_scroll_scrape.__license__,
+    packages=find_packages(include=["tq_scroll_scrape", "tq_scroll_scrape.*"]),
     python_requires=">=3.9",
     install_requires=["selenium"],
     classifiers=[
@@ -38,6 +38,6 @@ setup(
         "Topic :: Utilities"
     ],
     project_urls={
-        "GitHub": "https://github.com/farooq-teqniqly/tqdnld"
+        "GitHub": "https://github.com/farooq-teqniqly/tq-scroll-scrape"
     }
 )
