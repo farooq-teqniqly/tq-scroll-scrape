@@ -3,10 +3,10 @@ Errors module.
 """
 
 
-class ChromeDriverNotFoundException(Exception):
+class UnsupportedDriverException(Exception):
     """
-    Raised when the Chrome Driver executable isn't found.
-    """
+        Raised when an unsupported driver executable is used.
+        """
 
-    def __init__(self, expected_path: str):
-        super().__init__(f"Chromedriver.exe was not found at '{expected_path}'")
+    def __init__(self, driver_path: str):
+        super().__init__(f"The driver located at '{driver_path}' is not supported.")
