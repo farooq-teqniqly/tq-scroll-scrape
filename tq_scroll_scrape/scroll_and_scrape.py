@@ -5,21 +5,24 @@ import os
 import time
 from typing import Callable
 from selenium import webdriver
-from tq_scroll_scrape import errors
-
 
 # pylint: disable=too-few-public-methods
+from tq_scroll_scrape.errors import UnsupportedDriverException
+
+
 class ScrollAndScrape:
     """
     The ScrollAndScrape class manages the scrolling and downloading of pages.
     """
 
-    def __init__(self):
-        self._driver_path = os.path.join(os.getcwd(), "chromedriver.exe")
+    def __init__(self, driver_path: str):
+        if not driver_path:
+            raise ValueError("Driver path not specified.")
 
-        if not os.path.exists(self._driver_path):
-            raise errors.ChromeDriverNotFoundException(self._driver_path)
+        if not os.path.exists(driver_path):
+            raise FileNotFoundError(f"Driver path '{driver_path}' does not exist.")
 
+        self._driver_path = driver_path
         self.driver = None
 
     def download(
@@ -50,10 +53,7 @@ class ScrollAndScrape:
             if scroll_by < 1:
                 raise ValueError("scroll_by value must be greater than zero.")
 
-        self.driver = webdriver.Chrome(
-            executable_path=os.path.join(os.getcwd(), "chromedriver.exe")
-        )
-
+        self._initialize_driver()
         self.driver.maximize_window()
         self.driver.get(url)
 
@@ -86,3 +86,12 @@ class ScrollAndScrape:
 
         if on_after_download is not None:
             on_after_download(self.driver.page_source)
+
+    def _initialize_driver(self):
+        driver_filename = os.path.basename(self._driver_path).lower()
+        if driver_filename == "chromedriver.exe":
+            self.driver = webdriver.Chrome(executable_path=self._driver_path)
+        elif driver_filename == "geckodriver.exe":
+            self.driver = webdriver.Firefox(executable_path=self._driver_path)
+        else:
+            raise UnsupportedDriverException(self._driver_path)
