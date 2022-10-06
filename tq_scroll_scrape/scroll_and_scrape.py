@@ -5,6 +5,7 @@ import os
 import time
 from typing import Callable
 from selenium import webdriver
+from selenium.webdriver import ChromeOptions, FirefoxOptions
 
 # pylint: disable=too-few-public-methods
 from tq_scroll_scrape.errors import UnsupportedDriverException
@@ -15,7 +16,7 @@ class ScrollAndScrape:
     The ScrollAndScrape class manages the scrolling and downloading of pages.
     """
 
-    def __init__(self, driver_path: str):
+    def __init__(self, driver_path: str, headless=False):
         if not driver_path:
             raise ValueError("Driver path not specified.")
 
@@ -24,6 +25,7 @@ class ScrollAndScrape:
 
         self._driver_path = driver_path
         self.driver = None
+        self._headless = headless
 
     def download(
             self,
@@ -90,8 +92,14 @@ class ScrollAndScrape:
     def _initialize_driver(self):
         driver_filename = os.path.basename(self._driver_path).lower()
         if driver_filename == "chromedriver.exe":
-            self.driver = webdriver.Chrome(executable_path=self._driver_path)
+            options = ChromeOptions()
+            options.headless = self._headless
+
+            self.driver = webdriver.Chrome(executable_path=self._driver_path, options=options)
         elif driver_filename == "geckodriver.exe":
-            self.driver = webdriver.Firefox(executable_path=self._driver_path)
+            options = FirefoxOptions()
+            options.headless = self._headless
+
+            self.driver = webdriver.Firefox(executable_path=self._driver_path, options=options)
         else:
             raise UnsupportedDriverException(self._driver_path)
